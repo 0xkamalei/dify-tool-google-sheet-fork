@@ -1,6 +1,6 @@
 ## google_sheets
 
-**Author:** omluc
+**Author:** kamalei
 **Version:** 0.0.2
 **Type:** tool
 
@@ -14,6 +14,7 @@ This plugin provides a set of tools for integrating Google Sheets with Dify appl
 
 -   **Batch Get**: Efficiently retrieve data from multiple ranges within a Google Sheet.
 -   **Batch Update**: Efficiently update data in multiple ranges within a Google Sheet.
+-   **Batch Append**: Append data to multiple sheets/ranges, automatically creating sheets if they don't exist.
 
 ### Setup
 
@@ -124,6 +125,59 @@ Output:
       }
     ]
 
+}
+```
+
+#### Batch Append
+Use the 'Batch Append' tool to append data to multiple sheets. If a sheet listed in the range does not exist, it will be automatically created.
+
+```json
+Input:
+{
+  "spreadsheet_id": "your_spreadsheet_id",
+  "data": [
+    {
+        "range": "Sheet1",
+        "values": [
+            ["NewRow1_Col1", "NewRow1_Col2"],
+            ["NewRow2_Col1", "NewRow2_Col2"]
+        ]
+    },
+    {
+        "range": "NewSheet",
+        "values": [
+            ["Header1", "Header2"],
+            ["Value1", "Value2"]
+        ]
+    }
+  ]
+}
+
+Output:
+{
+    "spreadsheetId": "your_spreadsheet_id",
+    "responses": [
+      {
+        "spreadsheetId": "your_spreadsheet_id",
+        "updates": {
+            "spreadsheetId": "your_spreadsheet_id",
+            "updatedRange": "Sheet1!A10:B11",
+            "updatedRows": 2,
+            "updatedColumns": 2,
+            "updatedCells": 4
+        }
+      },
+      {
+        "spreadsheetId": "your_spreadsheet_id",
+        "updates": {
+            "spreadsheetId": "your_spreadsheet_id",
+            "updatedRange": "NewSheet!A1:B2",
+            "updatedRows": 2,
+            "updatedColumns": 2,
+            "updatedCells": 4
+        }
+      }
+    ]
 }
 ```
 
