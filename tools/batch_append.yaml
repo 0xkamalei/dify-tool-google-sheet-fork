@@ -1,0 +1,150 @@
+identity:
+  name: batch_append
+  author: kamalei
+  label:
+    en_US: Batch Append
+    zh_Hans: 批量追加
+    pt_BR: Acrescentar em Lote
+description:
+  human:
+    en_US: Append data to multiple sheets/ranges in a Google Sheet
+    zh_Hans: 向 Google 表格中的多个工作表/范围追加数据
+    pt_BR: Acrescentar dados a múltiplas planilhas/intervalos em uma planilha Google
+  llm: Append data to multiple sheets/ranges in a Google Sheet at once
+parameters:
+  - name: spreadsheet_id
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: Spreadsheet ID
+      zh_Hans: 表格 ID
+      pt_BR: ID da Planilha
+    human_description:
+      en_US: The ID of the Google Sheet (found in the URL)
+      zh_Hans: Google 表格的 ID（在 URL 中）
+      pt_BR: O ID da planilha Google (encontrado na URL)
+    llm_description: The ID of the Google Sheet, which can be found in the sheet's URL
+  - name: data
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: Data
+      zh_Hans: 数据
+      pt_BR: Dados
+    human_description:
+      en_US: JSON array of objects, each with 'range' (Sheet name or A1 notation) and 'values' (2D array of cell values). Example - [{"range":"Sheet1", "values":[["New Row 1"],["New Row 2"]]}]
+      zh_Hans: JSON 对象数组，每个对象包含 'range'（工作表名称或 A1 表示法）和 'values'（单元格值的二维数组）。例如 - [{"range":"Sheet1", "values":[["新行 1"],["新行 2"]]}]
+      pt_BR: Array JSON de objetos, cada um com 'range' (nome da planilha ou notação A1) e 'values' (array 2D de valores de célula). Exemplo - [{"range":"Sheet1", "values":[["Nova Linha 1"],["Nova Linha 2"]]}]
+    llm_description: "An array of objects to append to Google Sheets. Each object must contain - 1) 'range' - The sheet or range to append to (e.g., 'Sheet1' to append to the bottom of Sheet1), and 2) 'values' - A 2D array representing row/column values to append. Example - [{\"range\":\"Sheet1\", \"values\":[[\"Val1\",\"Val2\"],[\"Val3\",\"Val4\"]]}]. You can append to multiple sheets in a single request."
+  - name: value_input_option
+    type: select
+    default: USER_ENTERED
+    form: form
+    label:
+      en_US: Value Input Option
+      zh_Hans: 值输入选项
+      pt_BR: Opção de Entrada de Valor
+    human_description:
+      en_US: How the input data should be interpreted
+      zh_Hans: 如何解释输入数据
+      pt_BR: Como os dados de entrada devem ser interpretados
+    llm_description: How the input data should be interpreted
+    options:
+      - label:
+          en_US: USER_ENTERED
+          zh_Hans: 用户输入
+          pt_BR: ENTRADA DO USUÁRIO
+        value: USER_ENTERED
+      - label:
+          en_US: RAW
+          zh_Hans: 原始
+          pt_BR: BRUTO
+        value: RAW
+  - name: insert_data_option
+    type: select
+    default: INSERT_ROWS
+    form: form
+    label:
+      en_US: Insert Data Option
+      zh_Hans: 插入数据选项
+      pt_BR: Opção de Inserção de Dados
+    human_description:
+      en_US: How the input data should be inserted
+      zh_Hans: 如何插入输入数据
+      pt_BR: Como os dados de entrada devem ser inseridos
+    llm_description: How the input data should be inserted (INSERT_ROWS or OVERWRITE)
+    options:
+      - label:
+          en_US: INSERT_ROWS
+          zh_Hans: 插入行
+          pt_BR: INSERIR LINHAS
+        value: INSERT_ROWS
+      - label:
+          en_US: OVERWRITE
+          zh_Hans: 覆盖
+          pt_BR: SOBRESCREVER
+        value: OVERWRITE
+  - name: include_values_in_response
+    type: boolean
+    default: false
+    form: form
+    label:
+      en_US: Include Values in Response
+      zh_Hans: 在响应中包含值
+      pt_BR: Incluir Valores na Resposta
+    human_description:
+      en_US: Whether to include the values in the response
+      zh_Hans: 是否在响应中包含值
+      pt_BR: Se deve incluir os valores na resposta
+    llm_description: Whether to include the values in the response
+  - name: response_value_render_option
+    type: select
+    form: form
+    label:
+      en_US: Response Value Render Option
+      zh_Hans: 响应值渲染选项
+      pt_BR: Opção de Renderização de Valor da Resposta
+    human_description:
+      en_US: How the values in the response should be rendered
+      zh_Hans: 响应中的值应如何渲染
+      pt_BR: Como os valores na resposta devem ser renderizados
+    llm_description: How the values in the response should be rendered
+    options:
+      - label:
+          en_US: FORMATTED_VALUE
+          zh_Hans: 格式化值
+          pt_BR: VALOR FORMATADO
+        value: FORMATTED_VALUE
+      - label:
+          en_US: FORMULA
+          zh_Hans: 公式
+          pt_BR: FÓRMULA
+        value: FORMULA
+  - name: response_date_time_render_option
+    type: select
+    form: form
+    label:
+      en_US: Response Date Time Render Option
+      zh_Hans: 响应日期时间渲染选项
+      pt_BR: Opção de Renderização de Data e Hora da Resposta
+    human_description:
+      en_US: How dates, times, and durations in the response should be rendered
+      zh_Hans: 响应中的日期、时间和持续时间应如何渲染
+      pt_BR: Como datas, horários e durações na resposta devem ser renderizados
+    llm_description: How dates, times, and durations in the response should be rendered
+    options:
+      - label:
+          en_US: SERIAL_NUMBER
+          zh_Hans: 序列号
+          pt_BR: NÚMERO DE SÉRIE
+        value: SERIAL_NUMBER
+      - label:
+          en_US: FORMATTED_STRING
+          zh_Hans: 格式化字符串
+          pt_BR: STRING FORMATADA
+        value: FORMATTED_STRING
+extra:
+  python:
+    source: tools/batch_append.py
