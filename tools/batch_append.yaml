@@ -38,6 +38,30 @@ parameters:
       zh_Hans: JSON 对象数组，每个对象包含 'range'（工作表名称或 A1 表示法）和 'values'（单元格值的二维数组）。例如 - [{"range":"Sheet1", "values":[["新行 1"],["新行 2"]]}]
       pt_BR: Array JSON de objetos, cada um com 'range' (nome da planilha ou notação A1) e 'values' (array 2D de valores de célula). Exemplo - [{"range":"Sheet1", "values":[["Nova Linha 1"],["Nova Linha 2"]]}]
     llm_description: "An array of objects to append to Google Sheets. Each object must contain - 1) 'range' - The sheet or range to append to (e.g., 'Sheet1' to append to the bottom of Sheet1), and 2) 'values' - A 2D array representing row/column values to append. Example - [{\"range\":\"Sheet1\", \"values\":[[\"Val1\",\"Val2\"],[\"Val3\",\"Val4\"]]}]. You can append to multiple sheets in a single request."
+  - name: append_position
+    type: select
+    default: last_row
+    form: form
+    label:
+      en_US: Append Position
+      zh_Hans: 追加位置
+      pt_BR: Posição de Anexar
+    human_description:
+      en_US: Where to append the data (last_row or first_row)
+      zh_Hans: 追加数据的位置（最后一行或第一行）
+      pt_BR: Onde anexar os dados (última_linha ou primeira_linha)
+    llm_description: Where to append the data. 'last_row' appends after the last row of data. 'first_row' inserts at the top of the sheet.
+    options:
+      - label:
+          en_US: Last Row
+          zh_Hans: 最后一行
+          pt_BR: Última Linha
+        value: last_row
+      - label:
+          en_US: First Row
+          zh_Hans: 第一行
+          pt_BR: Primeira Linha
+        value: first_row
   - name: value_input_option
     type: select
     default: USER_ENTERED
@@ -62,30 +86,6 @@ parameters:
           zh_Hans: 原始
           pt_BR: BRUTO
         value: RAW
-  - name: insert_data_option
-    type: select
-    default: INSERT_ROWS
-    form: form
-    label:
-      en_US: Insert Data Option
-      zh_Hans: 插入数据选项
-      pt_BR: Opção de Inserção de Dados
-    human_description:
-      en_US: How the input data should be inserted
-      zh_Hans: 如何插入输入数据
-      pt_BR: Como os dados de entrada devem ser inseridos
-    llm_description: How the input data should be inserted (INSERT_ROWS or OVERWRITE)
-    options:
-      - label:
-          en_US: INSERT_ROWS
-          zh_Hans: 插入行
-          pt_BR: INSERIR LINHAS
-        value: INSERT_ROWS
-      - label:
-          en_US: OVERWRITE
-          zh_Hans: 覆盖
-          pt_BR: SOBRESCREVER
-        value: OVERWRITE
   - name: include_values_in_response
     type: boolean
     default: false
